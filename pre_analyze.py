@@ -73,7 +73,7 @@ excelfile['Reported Time'] = pd.to_datetime(excelfile['Reported Time'])
 excelfile.set_index('Reported Time', inplace=True)
 excelfile = excelfile[::-1]
 figura = plt.figure();
-
+ax = figura.add_subplot(111)
 colectieGraphs = graficCollection(figura)
 
 FilterParams = [('Slot', '==',[0,1,4])]
@@ -83,7 +83,9 @@ colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
 
 
 for label, serie in colectieGraphs.grafice.items():
-    serie.plot(label=label)
+    x = serie.index
+    y = serie.values
+    ax.plot(x, y, label=label)
     print(serie.head)
 
 #adjustments to the figure
@@ -91,11 +93,10 @@ for label, serie in colectieGraphs.grafice.items():
 
 colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
 dateTimeFmt = mdates.DateFormatter('%D %H:%M')
-#colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
-#colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
-colectieGraphs.figura.axes[0].xaxis.set_major_formatter('%D %H:%M')
+colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
 colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
-colectieGraphs.figura.legend(loc=9, ncol=colectieGraphs.grafice.__len__())
+colectieGraphs.figura.legend(loc=9, mode='expand', fontsize='small', ncol=5)
 colectieGraphs.figura.set_size_inches(9.99, 6.7)
 colectieGraphs.figura.tight_layout()
 colectieGraphs.figura.subplots_adjust(top = 0.900)
