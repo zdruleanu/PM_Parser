@@ -7,6 +7,7 @@ from pptx import Presentation
 from pptx.util import Inches
 from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
 from pptx.util import Pt
+import itertools
 
 class graficCollection:
     '''
@@ -24,32 +25,34 @@ class graficCollection:
         # TargetColumns is a list of column names that we want in the graph.
         # when we plot it will always plot based on the ExcelFie indexes on x axis
         #
-        # FilterParams = { 'Slot' : ('==',[0,1,4])}
+        # FilterParams = [('Slot', '==',[0,1,4]), ('altceva', '==',['d','d']), ('al3', '==',[7,938,54])]
 
 
-        FilterParamNumber = FilterParams.keys().__len__()
-        i = 0
+        FilterParamNumber = FilterParams.__len__()
+        AllColValuesLists = [i[2] for i in FilterParams]
+        AllColValuesListsCombinations = list(itertools.product(*AllColValuesLists))
 
-
-        FilterExpression = '( ('
-        for ColName,(operator, ColValues) in FilterParams.items():
-            i += 1
-            j = 0
-            for ColValue in ColValues:
-                j += 1
-                FilterExpression += "(ExcelFile['" + ColName + "'] " + operator + " " + str(ColValue) + ")"
-                if j < len(ColValues):
-                    FilterExpression += " | "
+        while True:
+            try:
+                comb = AllColValuesListsCombinations.pop(0)
+            except:
+                print("exited while")
+                break
+            FilterExpression = '('
+            for i in range(0,FilterParamNumber):
+                FilterExpression += "(ExcelFile['" + FilterParams[i][0] + "'] " + FilterParams[i][1] + " " + str(comb[i]) + ")"
+                if i < FilterParamNumber-1:
+                    FilterExpression += " & "
                 else:
-                    FilterExpression += " ) "
-            if i < FilterParamNumber:
-                FilterExpression += " & "
-            else:
-                FilterExpression += ")"
-        print("FiltereExpression is: ", FilterExpression)
-        filterResult = ExcelFile[eval(FilterExpression)]
-        for TargetColumn in TargetColumns:
-            self.grafice[TargetColumn] = (filterResult[TargetColumn])
+                    FilterExpression += ")"
+                print("FiltereExpression is: ", FilterExpression)
+            filterResult = ExcelFile[eval(FilterExpression)]
+            PrefixNumeGrafic = ''
+            for FilterParam in comb:
+                PrefixNumeGrafic += str(FilterParam) + "_"
+            for TargetColumn in TargetColumns:
+                if filterResult[TargetColumn].empty == False:
+                    self.grafice[PrefixNumeGrafic + TargetColumn] = (filterResult[TargetColumn])
 
 
 def find_csv_filenames(path_to_dir, suffix=".xls"):
@@ -73,7 +76,7 @@ figura = plt.figure();
 
 colectieGraphs = graficCollection(figura)
 
-FilterParams = { 'Slot' : ('==',[0,1,4])}
+FilterParams = [('Slot', '==',[0,1,4])]
 TargetColumns = ['Mean CPU Load (PERCENT)', 'Maximum CPU Load (PERCENT)']
 
 colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
@@ -81,15 +84,16 @@ colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
 
 for label, serie in colectieGraphs.grafice.items():
     serie.plot(label=label)
-    print("gr")
+    print(serie.head)
 
 #adjustments to the figure
 #---------
 
 colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
 dateTimeFmt = mdates.DateFormatter('%D %H:%M')
-colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
-colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+#colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+#colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+colectieGraphs.figura.axes[0].xaxis.set_major_formatter('%D %H:%M')
 colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
 colectieGraphs.figura.legend(loc=9, ncol=colectieGraphs.grafice.__len__())
 colectieGraphs.figura.set_size_inches(9.99, 6.7)
