@@ -1,6 +1,8 @@
 import pandas as pd
 from os import listdir
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import matplotlib.dates as mdates
 from pptx import Presentation
 from pptx.util import Inches
 from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
@@ -66,7 +68,7 @@ print(excelfile.head())
 # change Reported Time type from objet to datetime and set it as index
 excelfile['Reported Time'] = pd.to_datetime(excelfile['Reported Time'])
 excelfile.set_index('Reported Time', inplace=True)
-
+excelfile = excelfile[::-1]
 figura = plt.figure();
 
 colectieGraphs = graficCollection(figura)
@@ -81,11 +83,20 @@ for label, serie in colectieGraphs.grafice.items():
     serie.plot(label=label)
     print("gr")
 
+#adjustments to the figure
+#---------
+
 colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
+dateTimeFmt = mdates.DateFormatter('%D %H:%M')
+colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
 colectieGraphs.figura.legend(loc=9, ncol=colectieGraphs.grafice.__len__())
 colectieGraphs.figura.set_size_inches(9.99, 6.7)
 colectieGraphs.figura.tight_layout()
 colectieGraphs.figura.subplots_adjust(top = 0.900)
+
+#----------
 
 prs = Presentation()
 title_slide_layout = prs.slide_layouts[5]
@@ -102,11 +113,15 @@ titlu.top = 0
 titlu.left = 0
 titlu.height = Inches(0.5)
 titlu.width = Inches(10)
-
-#titlu.text_frame.auto_size = MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT
-#titlu.height = Inches(1)
 titlu.text_frame.paragraphs[0].font.size = Pt(14)
 titlu.text_frame.paragraphs[0].font.bold = True
+
 pic = slide.shapes.add_picture(tmpPicturePath + pictureName, Inches(0.01), Inches(0.5))
+
+
+
 prs.save(outputPath + pptName)
+
+
+
 #plt.close()
