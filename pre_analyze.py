@@ -8,6 +8,7 @@ from pptx.util import Inches
 from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
 from pptx.util import Pt
 import itertools
+import yaml
 
 class graficCollection:
     '''
@@ -25,7 +26,7 @@ class graficCollection:
         # TargetColumns is a list of column names that we want in the graph.
         # when we plot it will always plot based on the ExcelFie indexes on x axis
         #
-        # FilterParams = [('Slot', '==',[0,1,4]), ('altceva', '==',['d','d']), ('al3', '==',[7,938,54])]
+        # FilterParams = [['Slot', '==',[0,1,4]], ['altceva', '==',['d','d']], ['al3', '==',[7,938,54]]]
 
 
         FilterParamNumber = FilterParams.__len__()
@@ -79,7 +80,7 @@ filenames = find_csv_filenames("./data")
 
 
 
-configFilenames = find_csv_filenames("./data", ".yaml")
+#configFilenames = find_csv_filenames("./data", ".yaml")
 
 
 
@@ -87,20 +88,23 @@ for name in filenames:
     print(name)
 
 excelfile = pd.read_excel(filenames[0])
-
+configFile = open(os.path.splitext(filenames[0])[0] + ".yaml", "r")
+configDict = yaml.load(configFile)
 
 print(excelfile.head())
 
 # change Reported Time type from objet to datetime and set it as index
-excelfile['Reported Time'] = pd.to_datetime(excelfile['Reported Time'])
-excelfile.set_index('Reported Time', inplace=True)
+excelfile[configDict['indexul']] = pd.to_datetime(excelfile[configDict['indexul']])
+excelfile.set_index(configDict['indexul'], inplace=True)
+FilterParams = configDict['FilterParams']
+TargetColumns = configDict['TargetColumns']
+
+#reverse the oreder from oldest to newest
 excelfile = excelfile[::-1]
+
 figura = plt.figure();
 ax = figura.add_subplot(111)
 colectieGraphs = graficCollection(figura)
-
-FilterParams = [('Slot', '==',[0,1,4])]
-TargetColumns = ['Mean CPU Load (PERCENT)', 'Maximum CPU Load (PERCENT)']
 
 colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
 
