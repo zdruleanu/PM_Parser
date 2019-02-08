@@ -1,5 +1,5 @@
 import pandas as pd
-from os import listdir
+import os
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.dates as mdates
@@ -55,16 +55,39 @@ class graficCollection:
                     self.grafice[PrefixNumeGrafic + TargetColumn] = (filterResult[TargetColumn])
 
 
-def find_csv_filenames(path_to_dir, suffix=".xls"):
-    filenames = listdir(path_to_dir)
+def find_csv_filenames(path_to_dir, suffix=""):
+    filenames = os.listdir(path_to_dir)
     return [path_to_dir+"/"+filename for filename in filenames if filename.endswith(suffix)]
 
+def initializeConfigFiles(path_to_dir):
+    filenames = find_csv_filenames("./data")
+    for filename in filenames:
+        if os.path.splitext(filename)[1] == '.yaml':
+            continue
 
+        configFileName = os.path.splitext(filename)[0]+".yaml"
+        if configFileName in filenames:
+            print(filename + " already has the corresponding config file: " + configFileName)
+        else:
+            configFile = open(configFileName, "w")
+            configFile.close()
+            print("Created " + configFileName + " config file for " + filename)
+    print("Finished config files initialization")
+
+initializeConfigFiles("./data")
 filenames = find_csv_filenames("./data")
+
+
+
+configFilenames = find_csv_filenames("./data", ".yaml")
+
+
+
 for name in filenames:
     print(name)
 
 excelfile = pd.read_excel(filenames[0])
+
 
 print(excelfile.head())
 
@@ -86,7 +109,7 @@ for label, serie in colectieGraphs.grafice.items():
     x = serie.index
     y = serie.values
     ax.plot(x, y, label=label)
-    print(serie.head)
+
 
 #adjustments to the figure
 #---------

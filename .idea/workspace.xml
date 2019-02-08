@@ -4,7 +4,9 @@
     <list default="true" id="22c83dfe-7743-4181-9762-a22d3799ab1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/primul.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/output/primul.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tmp/pic1.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/pic1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,56 +22,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pre_analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="99" column="48" lean-forward="true" selection-start-line="99" selection-start-column="48" selection-end-line="99" selection-end-column="48" />
+            <state relative-caret-position="160">
+              <caret line="67" column="39" lean-forward="true" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/pandas/core/accessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="138" column="2" selection-start-line="138" selection-start-column="2" selection-end-line="138" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/pandas/plotting/_core.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="65" selection-start-line="65" selection-end-line="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/pyplot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="307" selection-start-line="307" selection-end-line="307" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="971" selection-start-line="971" selection-end-line="971" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/miniconda3/lib/python3.7/_collections_abc.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="719" selection-start-line="719" selection-end-line="719" />
             </state>
           </provider>
         </entry>
@@ -92,6 +49,8 @@
       <find>a=</find>
       <find>a</find>
       <find>colectieGraphs.figura</find>
+      <find>listdir</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -105,10 +64,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="336" />
+    <option name="x" value="337" />
     <option name="y" value="505" />
-    <option name="width" value="1182" />
-    <option name="height" value="484" />
+    <option name="width" value="1190" />
+    <option name="height" value="488" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -127,6 +86,15 @@
               <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
               <item name="PM_Parser" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (PM_Parser) &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -193,10 +161,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="31" width="2558" height="852" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="940" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.123239435" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.24960506" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5010846" side_tool="true" weight="0.24960506" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -210,7 +178,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.32885087" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32925338" />
       <window_info anchor="bottom" id="Event Log" order="10" show_stripe_button="false" sideWeight="0.50039124" side_tool="true" weight="0.28552458" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.49960876" visible="true" weight="0.4926959" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.49960876" visible="true" weight="0.4357405" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -274,17 +242,11 @@
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/pptx/shapes/shapetree.py" />
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py" />
     <entry file="file://$PROJECT_DIR$/venv/pyvenv.cfg" />
-    <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/dates.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-106">
-          <caret line="1532" column="8" selection-start-line="1532" selection-start-column="8" selection-end-line="1532" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/dates.py" />
     <entry file="file://$PROJECT_DIR$/pre_analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="99" column="48" lean-forward="true" selection-start-line="99" selection-start-column="48" selection-end-line="99" selection-end-column="48" />
+        <state relative-caret-position="160">
+          <caret line="67" column="39" lean-forward="true" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
