@@ -3,10 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="22c83dfe-7743-4181-9762-a22d3799ab1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/tmp/pic1.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/pic1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/.~lock.ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.xls#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Performance_Measurement_of_Board_Memory_Y2018M12D06H15N59S24.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Performance_Measurement_of_Board_Memory_Y2018M12D06H15N59S24.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Traffic_Measurement_of_Ethernet_Port_Y2018M12D06H15N59S32.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_Traffic_Measurement_of_Ethernet_Port_Y2018M12D06H15N59S32.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/Report_09-02-2019.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/output/Report_09-02-2019.pptx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_analyze.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pre_analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
+            <state relative-caret-position="275">
+              <caret line="163" lean-forward="true" selection-start-line="163" selection-end-line="163" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -51,6 +56,7 @@
       <find>colectieGraphs.figura</find>
       <find>listdir</find>
       <find>print</find>
+      <find>pic</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,6 +184,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pre_analyze.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -190,6 +203,11 @@
       <configuration name="PythonConfigurationType">
         <watch expression="filterResultBool" language="Python" />
         <watch expression="PrefixNumeGrafic + TargetColumn" language="Python" />
+        <watch expression="colectieGraphs.grafice['0_Mean CPU Load (PERCENT)'].index[0]" language="Python" />
+        <watch expression="colectieGraphs.figura.axes[0].xaxis.get_major_locator()()" language="Python" />
+        <watch expression="plt.axes().xaxis.get_major_locator()()" language="Python" />
+        <watch expression="mdates.num2date(737029.25)" language="Python" />
+        <watch expression="len(serie)" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -234,10 +252,17 @@
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py" />
     <entry file="file://$PROJECT_DIR$/venv/pyvenv.cfg" />
     <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/dates.py" />
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/523104797/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="501" column="4" selection-start-line="501" selection-start-column="4" selection-end-line="501" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pre_analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
+        <state relative-caret-position="275">
+          <caret line="163" lean-forward="true" selection-start-line="163" selection-end-line="163" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

@@ -1,0 +1,19 @@
+indexul: "Reported Time"
+FilterParams:
+ -
+  - "Slot"
+  - "=="
+  - 
+   - 0
+   - 1
+   - 4
+ -
+  - "Mean shit Load (PERCENT)"
+  - "<="
+  - 
+   - 6
+TargetColumns:
+ - "Mean shit Load (PERCENT)"
+ - "Maximum shit Load (PERCENT)"
+Title: "Board shit Load"
+slideNumber: "2"

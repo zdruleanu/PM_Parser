@@ -1,11 +1,9 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 import matplotlib.dates as mdates
 from pptx import Presentation
 from pptx.util import Inches
-from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE
 from pptx.util import Pt
 import itertools
 import yaml
@@ -26,7 +24,7 @@ class graficCollection:
         # TargetColumns is a list of column names that we want in the graph.
         # when we plot it will always plot based on the ExcelFie indexes on x axis
         #
-        # FilterParams = [['Slot', '==',[0,1,4]], ['altceva', '==',['d','d']], ['al3', '==',[7,938,54]]]
+        # FilterParams = [['Slot', '==',[0,1,4]], ['altceva', '==',['d','d']], ['al3', '<=',[7]]]
 
 
         FilterParamNumber = FilterParams.__len__()
@@ -49,8 +47,10 @@ class graficCollection:
                 print("FiltereExpression is: ", FilterExpression)
             filterResult = ExcelFile[eval(FilterExpression)]
             PrefixNumeGrafic = ''
-            for FilterParam in comb:
-                PrefixNumeGrafic += str(FilterParam) + "_"
+            # for FilterParam in comb:
+            #    PrefixNumeGrafic += str(FilterParam) + "_"
+            # we consider the first filter parameter relevnat for the name of the grapsh as it will be shown in the legend. For example it will represent the Slot number
+            PrefixNumeGrafic = str(comb[0]) + "_"
             for TargetColumn in TargetColumns:
                 if filterResult[TargetColumn].empty == False:
                     self.grafice[PrefixNumeGrafic + TargetColumn] = (filterResult[TargetColumn])
@@ -78,18 +78,18 @@ def initializeConfigFiles(path_to_dir):
 initializeConfigFiles("./data")
 fileNames = find_csv_filenames("./data", '.xls')
 
-#prepare presentation helpers
+# prepare presentation helpers
 prs = Presentation()
 outputPath = './output/'
 tmpPicturePath = './output/tmp/'
-tmpPictureName = 'pic1.png'
 pptName = 'Report_' + mdates.datetime.date.today().strftime('%d-%m-%Y') + '.pptx'
+slidesOrder = {}
 
 for fileName in fileNames:
     print(fileName)
     configFileName = os.path.splitext(fileName)[0] + ".yaml"
 
-    #check if the config file is empty. If, so skip this excel file
+    # check if the config file is empty. If, so skip this excel file
     if os.path.getsize(configFileName) != 0:
         configFile = open(configFileName, "r")
         configDict = yaml.load(configFile)
@@ -104,7 +104,7 @@ for fileName in fileNames:
     FilterParams = configDict['FilterParams']
     TargetColumns = configDict['TargetColumns']
 
-    #reverse the oreder from oldest to newest
+    # reverse the oreder from oldest to newest
     excelfile = excelfile[::-1]
     figura = plt.figure();
     ax = figura.add_subplot(111)
@@ -115,8 +115,8 @@ for fileName in fileNames:
         y = serie.values
         ax.plot(x, y, label=label)
 
-    #adjustments to the figure
-    #---------
+    # adjustments to the figure
+    # ---------
 
     colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
     dateTimeFmt = mdates.DateFormatter('%D %H:%M')
@@ -128,24 +128,38 @@ for fileName in fileNames:
     colectieGraphs.figura.tight_layout()
     colectieGraphs.figura.subplots_adjust(top = 0.900)
 
-    #----------
+    # ----------
 
-    #create a slide and add it to the ppt
+
+
+    tmpPictureName = configDict['Title'] + '.png'
+    plt.savefig(tmpPicturePath + tmpPictureName)
+
+
+    # Create a dictionary where the key is the slide number and the value is the picture name
+    # But first check if the order configured is correct. If not, terminate the script.
+    # note that the tmptPictureName will also be used for the Title of the slide
+    if configDict['slideNumber'] in slidesOrder.keys():
+        print("the slide number already exists. Please check the configs. Current config file: " + configFileName)
+        exit()
+    slidesOrder[configDict['slideNumber']] = tmpPictureName
+
+# We sort the slidesOrder so the outputed ppt would be in the requred
+sortedKeysAsInt = sorted([int(k) for k in slidesOrder.keys()])
+for slideNumber in sortedKeysAsInt:
+    # create a slide and add it to the ppt
     title_slide_layout = prs.slide_layouts[5]
     slide = prs.slides.add_slide(title_slide_layout)
-
-
-    plt.savefig(tmpPicturePath + tmpPictureName)
     titlu = slide.placeholders[0]
-    titlu.text = configDict['Title']
+    # As the value stored for the key is the tmpPictureName, we use it for the title by removing the extension
+    titlu.text = os.path.splitext(slidesOrder[str(slideNumber)])[0]
     titlu.top = 0
     titlu.left = 0
     titlu.height = Inches(0.5)
     titlu.width = Inches(10)
     titlu.text_frame.paragraphs[0].font.size = Pt(14)
     titlu.text_frame.paragraphs[0].font.bold = True
-
-    pic = slide.shapes.add_picture(tmpPicturePath + tmpPictureName, Inches(0.01), Inches(0.5))
+    pic = slide.shapes.add_picture(tmpPicturePath + slidesOrder[str(slideNumber)], Inches(0.01), Inches(0.5))
 
 
 
