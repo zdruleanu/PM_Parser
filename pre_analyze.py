@@ -76,79 +76,76 @@ def initializeConfigFiles(path_to_dir):
     print("Finished config files initialization")
 
 initializeConfigFiles("./data")
-filenames = find_csv_filenames("./data")
+fileNames = find_csv_filenames("./data", '.xls')
 
-
-
-#configFilenames = find_csv_filenames("./data", ".yaml")
-
-
-
-for name in filenames:
-    print(name)
-
-excelfile = pd.read_excel(filenames[0])
-configFile = open(os.path.splitext(filenames[0])[0] + ".yaml", "r")
-configDict = yaml.load(configFile)
-
-print(excelfile.head())
-
-# change Reported Time type from objet to datetime and set it as index
-excelfile[configDict['indexul']] = pd.to_datetime(excelfile[configDict['indexul']])
-excelfile.set_index(configDict['indexul'], inplace=True)
-FilterParams = configDict['FilterParams']
-TargetColumns = configDict['TargetColumns']
-
-#reverse the oreder from oldest to newest
-excelfile = excelfile[::-1]
-
-figura = plt.figure();
-ax = figura.add_subplot(111)
-colectieGraphs = graficCollection(figura)
-
-colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
-
-
-for label, serie in colectieGraphs.grafice.items():
-    x = serie.index
-    y = serie.values
-    ax.plot(x, y, label=label)
-
-
-#adjustments to the figure
-#---------
-
-colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
-dateTimeFmt = mdates.DateFormatter('%D %H:%M')
-colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
-colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
-colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
-colectieGraphs.figura.legend(loc=9, mode='expand', fontsize='small', ncol=5)
-colectieGraphs.figura.set_size_inches(9.99, 6.7)
-colectieGraphs.figura.tight_layout()
-colectieGraphs.figura.subplots_adjust(top = 0.900)
-
-#----------
-
+#prepare presentation helpers
 prs = Presentation()
-title_slide_layout = prs.slide_layouts[5]
-slide = prs.slides.add_slide(title_slide_layout)
-
 outputPath = './output/'
 tmpPicturePath = './output/tmp/'
-pictureName = 'pic1.png'
-pptName = 'primul.pptx'
-plt.savefig(tmpPicturePath + pictureName)
-titlu = slide.placeholders[0]
-titlu.text = 'titlu grafic'
-titlu.top = 0
-titlu.left = 0
-titlu.height = Inches(0.5)
-titlu.width = Inches(10)
-titlu.text_frame.paragraphs[0].font.size = Pt(14)
-titlu.text_frame.paragraphs[0].font.bold = True
+tmpPictureName = 'pic1.png'
+pptName = 'Report_' + mdates.datetime.date.today().strftime('%d-%m-%Y') + '.pptx'
 
-pic = slide.shapes.add_picture(tmpPicturePath + pictureName, Inches(0.01), Inches(0.5))
+for fileName in fileNames:
+    print(fileName)
+    configFileName = os.path.splitext(fileName)[0] + ".yaml"
+
+    #check if the config file is empty. If, so skip this excel file
+    if os.path.getsize(configFileName) != 0:
+        configFile = open(configFileName, "r")
+        configDict = yaml.load(configFile)
+    else:
+        print(fileName + " has an empty config file")
+        continue
+
+    excelfile = pd.read_excel(fileName)
+    # change Reported Time type from objet to datetime and set it as index
+    excelfile[configDict['indexul']] = pd.to_datetime(excelfile[configDict['indexul']])
+    excelfile.set_index(configDict['indexul'], inplace=True)
+    FilterParams = configDict['FilterParams']
+    TargetColumns = configDict['TargetColumns']
+
+    #reverse the oreder from oldest to newest
+    excelfile = excelfile[::-1]
+    figura = plt.figure();
+    ax = figura.add_subplot(111)
+    colectieGraphs = graficCollection(figura)
+    colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
+    for label, serie in colectieGraphs.grafice.items():
+        x = serie.index
+        y = serie.values
+        ax.plot(x, y, label=label)
+
+    #adjustments to the figure
+    #---------
+
+    colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
+    dateTimeFmt = mdates.DateFormatter('%D %H:%M')
+    colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+    colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+    colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
+    colectieGraphs.figura.legend(loc=9, mode='expand', fontsize='small', ncol=5)
+    colectieGraphs.figura.set_size_inches(9.99, 6.7)
+    colectieGraphs.figura.tight_layout()
+    colectieGraphs.figura.subplots_adjust(top = 0.900)
+
+    #----------
+
+    #create a slide and add it to the ppt
+    title_slide_layout = prs.slide_layouts[5]
+    slide = prs.slides.add_slide(title_slide_layout)
+
+
+    plt.savefig(tmpPicturePath + tmpPictureName)
+    titlu = slide.placeholders[0]
+    titlu.text = configDict['Title']
+    titlu.top = 0
+    titlu.left = 0
+    titlu.height = Inches(0.5)
+    titlu.width = Inches(10)
+    titlu.text_frame.paragraphs[0].font.size = Pt(14)
+    titlu.text_frame.paragraphs[0].font.bold = True
+
+    pic = slide.shapes.add_picture(tmpPicturePath + tmpPictureName, Inches(0.01), Inches(0.5))
 
 
 
