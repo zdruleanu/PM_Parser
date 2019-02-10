@@ -3,14 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="22c83dfe-7743-4181-9762-a22d3799ab1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/.~lock.ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.xls#" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.xls" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Disk_Usage_Measurement_Y2018M12D06H15N59S43.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Performance_Measurement_of_Board_Memory_Y2018M12D06H15N59S24.xls" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Performance_Measurement_of_Board_Memory_Y2018M12D06H15N59S24.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Traffic_Measurement_of_Ethernet_Port_Y2018M12D06H15N59S32.xls" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_Traffic_Measurement_of_Ethernet_Port_Y2018M12D06H15N59S32.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/Report_09-02-2019.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/output/Report_09-02-2019.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ne_0_fakedata.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/ne_0_fakedata.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tmp/Board CPU Load.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/Board CPU Load.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tmp/Board shit Load.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/Board shit Load.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_analyze.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pre_analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="163" lean-forward="true" selection-start-line="163" selection-end-line="163" />
+            <state relative-caret-position="257">
+              <caret line="135" column="97" lean-forward="true" selection-start-line="135" selection-start-column="97" selection-end-line="135" selection-end-column="97" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -57,6 +53,9 @@
       <find>listdir</find>
       <find>print</find>
       <find>pic</find>
+      <find>extrage_gafice</find>
+      <find>exit</find>
+      <find>FiltereExpression is</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -184,13 +183,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pre_analyze.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -261,8 +253,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pre_analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="163" lean-forward="true" selection-start-line="163" selection-end-line="163" />
+        <state relative-caret-position="257">
+          <caret line="135" column="97" lean-forward="true" selection-start-line="135" selection-start-column="97" selection-end-line="135" selection-end-column="97" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

@@ -12,3 +12,4 @@ TargetColumns:
  - "Maximum CPU Load (PERCENT)"
 Title: "Board CPU Load"
 slideNumber: "1"
+UseTargetColumnsInLegend: True

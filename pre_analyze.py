@@ -16,7 +16,7 @@ class graficCollection:
         self.figura = figura
         self.grafice = {}
 
-    def extrage_gafice(self, ExcelFile, FilterParams, TargetColumns):
+    def extrage_gafice(self, ExcelFile, FilterParams, TargetColumns, UseTargetColumnsInLegend):
         # The function returns a list of pandas series, where each series will be ploted on the same plot
         # ExcelFile is the imported DataFrame (already indexed by time)
         # FilterParams is a dictionary with keys being column names and values being a tuple, where the first item is
@@ -35,7 +35,7 @@ class graficCollection:
             try:
                 comb = AllColValuesListsCombinations.pop(0)
             except:
-                print("exited while")
+                print('Finished graphs data generation')
                 break
             FilterExpression = '('
             for i in range(0,FilterParamNumber):
@@ -44,17 +44,26 @@ class graficCollection:
                     FilterExpression += " & "
                 else:
                     FilterExpression += ")"
-                print("FiltereExpression is: ", FilterExpression)
+            print("FiltereExpression is: ", FilterExpression)
             filterResult = ExcelFile[eval(FilterExpression)]
             PrefixNumeGrafic = ''
             # for FilterParam in comb:
             #    PrefixNumeGrafic += str(FilterParam) + "_"
             # we consider the first filter parameter relevnat for the name of the grapsh as it will be shown in the legend. For example it will represent the Slot number
-            PrefixNumeGrafic = str(comb[0]) + "_"
-            for TargetColumn in TargetColumns:
-                if filterResult[TargetColumn].empty == False:
-                    self.grafice[PrefixNumeGrafic + TargetColumn] = (filterResult[TargetColumn])
+            PrefixNumeGrafic = str(comb[0])
 
+            for TargetColumn in TargetColumns:
+                if not filterResult[TargetColumn].empty:
+                    if UseTargetColumnsInLegend:
+                        self.grafice[PrefixNumeGrafic + "_" + TargetColumn] = (filterResult[TargetColumn])
+                    else:
+                        # Filtering parameters might lead to a result where the PrefixNumeGrafic is not unique.
+                        # If so, exit and print Error
+                        if PrefixNumeGrafic in self.grafice.keys():
+                            print("ERROR: graph names are not unique. Please set UseTargetColumnsInLegend to True in the config file")
+                            exit()
+                        else:
+                            self.grafice[PrefixNumeGrafic] = (filterResult[TargetColumn])
 
 def find_csv_filenames(path_to_dir, suffix=""):
     filenames = os.listdir(path_to_dir)
@@ -103,13 +112,14 @@ for fileName in fileNames:
     excelfile.set_index(configDict['indexul'], inplace=True)
     FilterParams = configDict['FilterParams']
     TargetColumns = configDict['TargetColumns']
+    UseTargetColumnsInLegend = configDict['UseTargetColumnsInLegend']
 
     # reverse the oreder from oldest to newest
     excelfile = excelfile[::-1]
     figura = plt.figure();
     ax = figura.add_subplot(111)
     colectieGraphs = graficCollection(figura)
-    colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns)
+    colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns, UseTargetColumnsInLegend)
     for label, serie in colectieGraphs.grafice.items():
         x = serie.index
         y = serie.values
@@ -123,7 +133,7 @@ for fileName in fileNames:
     colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
     colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
     colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation = 90)
-    colectieGraphs.figura.legend(loc=9, mode='expand', fontsize='small', ncol=5)
+    colectieGraphs.figura.legend(loc=9, mode='none', fontsize='small', ncol=5, labelspacing=0.05)
     colectieGraphs.figura.set_size_inches(9.99, 6.7)
     colectieGraphs.figura.tight_layout()
     colectieGraphs.figura.subplots_adjust(top = 0.900)
