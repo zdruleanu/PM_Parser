@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22c83dfe-7743-4181-9762-a22d3799ab1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/ne_0_CPU_Load_Measurement_Y2018M12D05H09N50S50.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ne_0_fakedata.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/ne_0_fakedata.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/tmp/Board CPU Load.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/Board CPU Load.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/tmp/Board shit Load.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/Board shit Load.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_analyze.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pre_analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="135" column="97" lean-forward="true" selection-start-line="135" selection-start-column="97" selection-end-line="135" selection-end-column="97" />
+            <state relative-caret-position="133">
+              <caret line="192" column="45" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -56,7 +53,21 @@
       <find>extrage_gafice</find>
       <find>exit</find>
       <find>FiltereExpression is</find>
+      <find>xl</find>
+      <find>csv</find>
+      <find>filesExtenssion</find>
+      <find>Extenssion</find>
+      <find>path_to_dir</find>
+      <find>initializeConfigFiles</find>
+      <find>initialize_config_files</find>
+      <find>find_data_filenames</find>
+      <find>tit</find>
+      <find>legend</find>
     </findStrings>
+    <replaceStrings>
+      <replace>Extension</replace>
+      <replace>initialize_config_files</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,7 +79,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="337" />
     <option name="y" value="505" />
     <option name="width" value="1190" />
@@ -91,6 +102,15 @@
               <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
               <item name="PM_Parser" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="PM_Parser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.7 (PM_Parser) &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -157,16 +177,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="31" width="2558" height="852" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1920" height="940" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.123239435" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.24960506" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5010846" side_tool="true" weight="0.24960506" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3984064" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3977968" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -174,7 +193,7 @@
       <window_info anchor="bottom" id="Inspection Results" order="8" weight="0.32885087" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32925338" />
       <window_info anchor="bottom" id="Event Log" order="10" show_stripe_button="false" sideWeight="0.50039124" side_tool="true" weight="0.28552458" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.49960876" visible="true" weight="0.4926959" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="11" sideWeight="0.49960876" visible="true" weight="0.4357405" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -241,20 +260,16 @@
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/pandas/core/common.py" />
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/pptx/slide.py" />
     <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/pptx/shapes/shapetree.py" />
-    <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py" />
     <entry file="file://$PROJECT_DIR$/venv/pyvenv.cfg" />
     <entry file="file:///opt/miniconda3/lib/python3.7/site-packages/matplotlib/dates.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/523104797/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="501" column="4" selection-start-line="501" selection-start-column="4" selection-end-line="501" selection-end-column="4" />
-        </state>
-      </provider>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/523104797/builtins.py" />
+    <entry file="file:///home/acaraman/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/pre_analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="135" column="97" lean-forward="true" selection-start-line="135" selection-start-column="97" selection-end-line="135" selection-end-column="97" />
+        <state relative-caret-position="133">
+          <caret line="192" column="45" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="45" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
