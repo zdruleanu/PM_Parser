@@ -84,7 +84,7 @@ def find_data_filenames(path_to_dir, prefix="", suffix=""):
 
 
 def check_if_template(extracted_for_template_check, template_dir):
-    # Checks in the templateDir if there exists a file whos name begins with extractedForTemplateCheck.
+    # Checks in the templateDir if there exists a file whos name begins with extracted_for_template_check.
     # Returns the template file name (with path)
     print("Checking for tempates")
     templateFileName = find_data_filenames(template_dir, prefix=extracted_for_template_check)
