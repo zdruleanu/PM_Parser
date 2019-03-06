@@ -36,10 +36,22 @@ def folder_exists_menu(target_path):
     return targetPath
 
 
-zifFileName = argv[1]
 compressedDataFolder = './compressedData'
+
+try:
+    zipFileName = argv[1]
+except IndexError as e:
+    print("Zip file name not provided as argument")
+    zipFileName = ""
+while True:
+    if os.path.isfile(compressedDataFolder + "/" + zipFileName):
+        print("Zip file containing data: " + zipFileName)
+        break
+    else:
+        print("zip file doesn't exist in " + compressedDataFolder)
+        zipFileName = input('Please enter the zip filename: ')
 dataFolder = './data'
-targetFolder = os.path.splitext(zifFileName)[0]
+targetFolder = os.path.splitext(zipFileName)[0]
 targetPath = dataFolder + "/" + targetFolder
 
 if not (os.path.isdir(targetPath)):
@@ -60,10 +72,10 @@ if os.path.isdir(targetPathTmp):
 
 print("Creating the temporary folder for tar.gz files")
 os.mkdir(targetPathTmp)
-compressedFile = zipfile.ZipFile(compressedDataFolder + "/" + zifFileName)
+compressedFile = zipfile.ZipFile(compressedDataFolder + "/" + zipFileName)
 
 # orderFile contains the order of the extracted files. It is actually the prefixes which will be used for the filenames
-orderFilePath = compressedDataFolder + "/" + zifFileName + "_order.txt"
+orderFilePath = compressedDataFolder + "/" + zipFileName + "_order.txt"
 with open(orderFilePath,"r") as orderFile:
     orderList = orderFile.readlines()
 print("Extracting files to temporary folder")

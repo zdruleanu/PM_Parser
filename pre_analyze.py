@@ -3,11 +3,13 @@ import os
 import shutil
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import itertools
+import yaml
 from pptx import Presentation
 from pptx.util import Inches
 from pptx.util import Pt
-import itertools
-import yaml
+from sys import argv
+
 
 
 class GraficCollection:
@@ -130,11 +132,26 @@ def fileToPandas(fileName, fileExtension, skipRows=0):
         return pd.read_excel(fileName, skipRows=skipRows)
 
 
-dataPath = "./data/VDF_13.02.19"
+dataFolder = "./data"
+try:
+    pmFolder = argv[1]
+    pmDataPath = dataFolder + "/" + pmFolder
+except IndexError as e:
+    print("PM Data folder not provided as argument")
+    pmFolder = ""
+    pmDataPath = ""
+while True:
+    if os.path.isdir(pmDataPath):
+        print("Folder containing PM Data: " + pmDataPath)
+        break
+    else:
+        print("PM Data folder " + pmFolder + " doesn't exist in " + dataFolder)
+        pmFolder = input('Please enter the PM Data folder name located in ' + dataFolder + ":")
+        pmDataPath = dataFolder + "/" + pmFolder
 templatesPath = "./templates"
 filesExtension = '.csv'
-initialize_config_files(dataPath, templatesPath)
-fileNames = find_data_filenames(dataPath, suffix=filesExtension)
+initialize_config_files(pmDataPath, templatesPath)
+fileNames = find_data_filenames(pmDataPath, suffix=filesExtension)
 skippedRowsNumber = 7
 
 # prepare presentation helpers
@@ -169,9 +186,11 @@ for fileName in fileNames:
     FilterParams = configDict['FilterParams']
     TargetColumns = configDict['TargetColumns']
     UseTargetColumnsInLegend = configDict['UseTargetColumnsInLegend']
+    reverseNeeded = configDict['reverseNeeded']
 
-    # reverse the oreder from oldest to newest
-    excelfile = excelfile[::-1]
+    if reverseNeeded:
+        # reverse the oreder from oldest to newest
+        excelfile = excelfile[::-1]
     figura = plt.figure();
     ax = figura.add_subplot(111)
     colectieGraphs = GraficCollection(figura)
