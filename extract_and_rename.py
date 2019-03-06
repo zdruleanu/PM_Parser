@@ -1,13 +1,8 @@
 import zipfile
+import tarfile
 from sys import argv
 import os
 from shutil import rmtree
-
-fileName = argv[1]
-compressedDataFolder = './compressedData'
-dataFolder = './data'
-targetFolder = os.path.splitext(fileName)[0]
-targetPath = dataFolder + "/" + targetFolder
 
 
 def folder_exists_menu(target_path):
@@ -41,6 +36,12 @@ def folder_exists_menu(target_path):
     return targetPath
 
 
+zifFileName = argv[1]
+compressedDataFolder = './compressedData'
+dataFolder = './data'
+targetFolder = os.path.splitext(zifFileName)[0]
+targetPath = dataFolder + "/" + targetFolder
+
 if not (os.path.isdir(targetPath)):
     os.mkdir(targetPath)
 else:
@@ -59,10 +60,26 @@ if os.path.isdir(targetPathTmp):
 
 print("Creating the temporary folder for tar.gz files")
 os.mkdir(targetPathTmp)
-compressedFile = zipfile.ZipFile(compressedDataFolder + "/" + fileName)
+compressedFile = zipfile.ZipFile(compressedDataFolder + "/" + zifFileName)
+
+# orderFile contains the order of the extracted files. It is actually the prefixes which will be used for the filenames
+orderFilePath = compressedDataFolder + "/" + zifFileName + "_order.txt"
+with open(orderFilePath,"r") as orderFile:
+    orderList = orderFile.readlines()
 print("Extracting files to temporary folder")
 compressedFile.extractall(targetPathTmp)
-print("done extracting tar.gz files")
+print("done extracting from zip file")
+targzfFiles = [targetPathTmp + "/" + filename for filename in os.listdir(targetPathTmp)
+               if os.path.isfile(targetPathTmp + "/" + filename)]
 
-
-
+print("Extracting and renaming PM files")
+# the elements in orderList are assumed to match the order of the files extracted from the zip archive
+for (fileName, order) in zip(targzfFiles, orderList):
+    targzFile = tarfile.open(fileName)
+    [pmFileNameTarInfoObj] = targzFile.getmembers()
+    pmFileName = pmFileNameTarInfoObj.name
+    targzFile.extractall(path=targetPath)
+    # we only use order[:-1] in order to demove the \n
+    targetPmFileName = order[:-1] + "_" + pmFileName.split("_")[-1]
+    os.rename(targetPath + "/" + pmFileName, targetPath + "/" + targetPmFileName)
+    print("Extracted " + pmFileName + " as " + targetPmFileName)

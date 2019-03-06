@@ -1,0 +1,11 @@
+SessRel
+SessUrel
+SRVCC
+AnRx
+MO
+MT
+Rx
+OnlineSess
+MediaTrans
+MoOxx
+MtOxx
