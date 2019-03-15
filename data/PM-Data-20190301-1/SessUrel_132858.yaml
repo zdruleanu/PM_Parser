@@ -1,19 +1,37 @@
-indexul: "Start Time"
-FilterParams:
- -
-  - "NE Name"
-  - "=="
-  - 
-   - "rn2imsbc031"
-   - "ofbh1imsbc007"
-   - "lpzg1imsbc007"
-   - "hmbg6imsbc007"
-   - "mnch4imsbc007"
+- indexul: "Start Time"
+  FilterParams:
+  -
+   - "NE Name"
+   - "=="
+   - 
+    - "rn2imsbc031"
+    - "ofbh1imsbc007"
+    - "lpzg1imsbc007"
+    - "hmbg6imsbc007"
+    - "mnch4imsbc007"
      
-TargetColumns:
- - "Number of ABCF Registered Users (number)"
+  TargetColumns:
+  - "Number of ABCF Registered Users (number)"
+  Title: "Number of Registered Users"
+  slideNumber: "1"
+  UseTargetColumnsInLegend: False
+  reverseNeeded: False
+- indexul: "Start Time"
+  FilterParams:
+  -
+   - "NE Name"
+   - "=="
+   -
+    - "rn2imsbc031"
+    - "ofbh1imsbc007"
+    - "lpzg1imsbc007"
+    - "hmbg6imsbc007"
+    - "mnch4imsbc007"
 
-Title: "Number of Registered Users"
-slideNumber: "1"
-UseTargetColumnsInLegend: False
-reverseNeeded: False
+  TargetColumns:
+  - "Rate of ABCF Successful Deregistrations (%)"
+  Title: "Rate of ABCF Successful Deregistrations"
+  slideNumber: "5"
+  UseTargetColumnsInLegend: False
+  reverseNeeded: False
+

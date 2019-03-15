@@ -9,7 +9,7 @@ from pptx import Presentation
 from pptx.util import Inches
 from pptx.util import Pt
 from sys import argv
-
+from matplotlib.widgets import TextBox
 
 
 class GraficCollection:
@@ -168,65 +168,74 @@ for fileName in fileNames:
     # check if the config file is empty. If, so skip this excel file
     if os.path.getsize(configFileName) != 0:
         configFile = open(configFileName, "r")
-        configDict = yaml.load(configFile)
+        configDictsList = yaml.load(configFile)
     else:
         print(fileName + " has an empty config file")
         continue
+    # check if 'Result' is in the first line of the file. If so, remove 7 lines
 
-    #check if 'Result' is in the first line of the file. If so, remove 7 lines
-    line = open(fileName).readline()
-    if 'Result' in line:
-        excelfile = fileToPandas(fileName, filesExtension, skippedRowsNumber)
-    else:
-        excelfile = fileToPandas(fileName, filesExtension)
+    while len(configDictsList) > 0:
+        line = open(fileName).readline()
+        if 'Result' in line:
+            excelfile = fileToPandas(fileName, filesExtension, skippedRowsNumber)
+        else:
+            excelfile = fileToPandas(fileName, filesExtension)
+        # Since the yaml config file contains a list of dictionaries (each file can be used for multiple graphs),
+        # we pop each config and create the graph
 
-    # change Reported Time type from objet to datetime and set it as index
-    excelfile[configDict['indexul']] = pd.to_datetime(excelfile[configDict['indexul']])
-    excelfile.set_index(configDict['indexul'], inplace=True)
-    FilterParams = configDict['FilterParams']
-    TargetColumns = configDict['TargetColumns']
-    UseTargetColumnsInLegend = configDict['UseTargetColumnsInLegend']
-    reverseNeeded = configDict['reverseNeeded']
+        configDict = configDictsList.pop(0)
+        # change Reported Time type from objet to datetime and set it as index
+        print("configDict este: ")
+        print(configDict)
+        excelfile[configDict['indexul']] = pd.to_datetime(excelfile[configDict['indexul']])
+        excelfile.set_index(configDict['indexul'], inplace=True)
+        FilterParams = configDict['FilterParams']
+        TargetColumns = configDict['TargetColumns']
+        UseTargetColumnsInLegend = configDict['UseTargetColumnsInLegend']
+        reverseNeeded = configDict['reverseNeeded']
 
-    if reverseNeeded:
-        # reverse the oreder from oldest to newest
-        excelfile = excelfile[::-1]
-    figura = plt.figure();
-    ax = figura.add_subplot(111)
-    colectieGraphs = GraficCollection(figura)
-    colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns, UseTargetColumnsInLegend)
-    for label, serie in colectieGraphs.grafice.items():
-        x = serie.index
-        y = serie.values
-        ax.plot(x, y, label=label)
+        if reverseNeeded:
+            # reverse the oreder from oldest to newest
 
-    # adjustments to the figure
-    # ---------
+            excelfile = excelfile[::-1]
+        figura = plt.figure();
+        ax = figura.add_subplot(111)
+        colectieGraphs = GraficCollection(figura)
+        colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns, UseTargetColumnsInLegend)
+        for label, serie in colectieGraphs.grafice.items():
+            x = serie.index
+            y = serie.values
+            ax.plot(x, y, label=label)
 
-    colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
-    dateTimeFmt = mdates.DateFormatter('%D %H:%M')
-    colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
-    colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
-    colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation=90)
-    #colectieGraphs.figura.legend(loc=9, mode='none', fontsize='small', ncol=5, labelspacing=0.05)
-    colectieGraphs.figura.legend(loc=9,ncol=5)
-    colectieGraphs.figura.set_size_inches(9.99, 6.7)
-    colectieGraphs.figura.tight_layout()
-    colectieGraphs.figura.subplots_adjust(top = 0.800)
+        # adjustments to the figure
+        # ---------
 
-    # ----------
+        colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
+        dateTimeFmt = mdates.DateFormatter('%D %H:%M')
+        colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+        colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+        colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation=90)
+        #colectieGraphs.figura.legend(loc=9, mode='none', fontsize='small', ncol=5, labelspacing=0.05)
+        colectieGraphs.figura.legend(loc=9, ncol=5)
+        colectieGraphs.figura.set_size_inches(9.99, 6.7)
+        colectieGraphs.figura.tight_layout()
+        colectieGraphs.figura.subplots_adjust(top=0.900, bottom=0.3)
+        colectieGraphs.figura.add_axes([0.1, 0.01, 0.3, 0.07])
+        axaTextBox = colectieGraphs.figura.axes[-1]
+        text_box = TextBox(axaTextBox, 'Evaluate', initial=FilterParams.__repr__())
 
-    tmpPictureName = configDict['Title'] + '.png'
-    plt.savefig(tmpPicturePath + tmpPictureName)
+        # ----------
 
+        tmpPictureName = configDict['Title'] + '.png'
+        plt.savefig(tmpPicturePath + tmpPictureName)
 
-    # Create a dictionary where the key is the slide number and the value is the picture name
-    # But first check if the order configured is correct. If not, terminate the script.
-    # note that the tmptPictureName will also be used for the Title of the slide
-    if configDict['slideNumber'] in slidesOrder.keys():
-        print("the slide number already exists. Please check the configs. Current config file: " + configFileName)
-        exit()
-    slidesOrder[configDict['slideNumber']] = tmpPictureName
+        # Create a dictionary where the key is the slide number and the value is the picture name
+        # But first check if the order configured is correct. If not, terminate the script.
+        # note that the tmptPictureName will also be used for the Title of the slide
+        if configDict['slideNumber'] in slidesOrder.keys():
+            print("the slide number already exists. Please check the configs. Current config file: " + configFileName)
+            exit()
+        slidesOrder[configDict['slideNumber']] = tmpPictureName
 
 # We sort the slidesOrder so the outputed ppt would be in the requred
 sortedKeysAsInt = sorted([int(k) for k in slidesOrder.keys()])

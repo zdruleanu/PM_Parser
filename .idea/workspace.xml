@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22c83dfe-7743-4181-9762-a22d3799ab1c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/extract_and_rename.py" beforeDir="false" afterPath="$PROJECT_DIR$/extract_and_rename.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/PM-Data-20190301-1/SessUrel_132858.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/data/PM-Data-20190301-1/SessUrel_132858.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/tmp/Number of Registered Users.png" beforeDir="false" afterPath="$PROJECT_DIR$/output/tmp/Number of Registered Users.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/SessRel_tpl.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/SessUrel_tpl.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/SessUrel_tpl.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +23,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pre_analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
+            <state relative-caret-position="306">
+              <caret line="222" column="62" lean-forward="true" selection-start-line="222" selection-start-column="62" selection-end-line="222" selection-end-column="62" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -51,8 +55,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>brd_0</find>
-      <find>br</find>
       <find>reported</find>
       <find>tight</find>
       <find>a=</find>
@@ -79,12 +81,17 @@
       <find>zifFileName</find>
       <find>readline</find>
       <find>dataPath</find>
+      <find>configDict</find>
+      <find>slidesOrder</find>
+      <find>slideNumber</find>
+      <find>add_ax</find>
     </findStrings>
     <replaceStrings>
       <replace>Extension</replace>
       <replace>zipFileName</replace>
       <replace>initialize_config_files</replace>
       <replace>pmDataPath</replace>
+      <replace>configDictsList</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -217,6 +224,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="940" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.24960506" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -317,8 +325,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pre_analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
+        <state relative-caret-position="306">
+          <caret line="222" column="62" lean-forward="true" selection-start-line="222" selection-start-column="62" selection-end-line="222" selection-end-column="62" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
