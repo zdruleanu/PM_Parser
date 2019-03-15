@@ -1,8 +1,14 @@
 import pandas as pd
 import os
 import shutil
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from bokeh.plotting import figure, show
+from bokeh.io import output_file
+from bokeh.models.widgets import Tabs, Panel
+from bokeh.io import export_png
+import bokeh.palettes as palletes
+from bokeh.models import Legend, LegendItem
 import itertools
 import yaml
 from pptx import Presentation
@@ -161,6 +167,11 @@ tmpPicturePath = './output/tmp/'
 pptName = 'Report_' + mdates.datetime.date.today().strftime('%d-%m-%Y') + '.pptx'
 slidesOrder = {}
 
+# prepare figure helpers
+panels = []
+output_file('Report_' + mdates.datetime.date.today().strftime('%d-%m-%Y') + '.html',
+            title='Report_' + mdates.datetime.date.today().strftime('%d-%m-%Y') )
+
 for fileName in fileNames:
     print(fileName)
     configFileName = os.path.splitext(fileName)[0] + ".yaml"
@@ -198,36 +209,41 @@ for fileName in fileNames:
             # reverse the oreder from oldest to newest
 
             excelfile = excelfile[::-1]
-        figura = plt.figure();
-        ax = figura.add_subplot(111)
+        figura = figure(x_axis_type='datetime', plot_width=900)
+        legenda = Legend()
         colectieGraphs = GraficCollection(figura)
         colectieGraphs.extrage_gafice(excelfile, FilterParams, TargetColumns, UseTargetColumnsInLegend)
+        i=0
         for label, serie in colectieGraphs.grafice.items():
             x = serie.index
             y = serie.values
-            ax.plot(x, y, label=label)
+            graficCurent = colectieGraphs.figura.line(x=x, y=y, color=palletes.Paired[len(colectieGraphs.grafice)][i])
+            legenda.items.extend([LegendItem(label=label, renderers=[graficCurent])])
+            i += 1
+        colectieGraphs.figura.add_layout(legenda, 'above')
+        panels.append(Panel(child=colectieGraphs.figura, title=TargetColumns.__str__()))
 
         # adjustments to the figure
         # ---------
 
-        colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
-        dateTimeFmt = mdates.DateFormatter('%D %H:%M')
-        colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
-        colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
-        colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation=90)
+        # colectieGraphs.figura.axes[0].set_xlim(excelfile.index[0], excelfile.index[-1])
+        # dateTimeFmt = mdates.DateFormatter('%D %H:%M')
+        # colectieGraphs.figura.axes[0].xaxis.set_major_locator(plt.MaxNLocator(45))
+        # colectieGraphs.figura.axes[0].xaxis.set_major_formatter(dateTimeFmt)
+        # colectieGraphs.figura.axes[0].xaxis.set_tick_params(rotation=90)
         #colectieGraphs.figura.legend(loc=9, mode='none', fontsize='small', ncol=5, labelspacing=0.05)
-        colectieGraphs.figura.legend(loc=9, ncol=5)
-        colectieGraphs.figura.set_size_inches(9.99, 6.7)
-        colectieGraphs.figura.tight_layout()
-        colectieGraphs.figura.subplots_adjust(top=0.900, bottom=0.3)
-        colectieGraphs.figura.add_axes([0.1, 0.01, 0.3, 0.07])
-        axaTextBox = colectieGraphs.figura.axes[-1]
-        text_box = TextBox(axaTextBox, 'Evaluate', initial=FilterParams.__repr__())
+        # colectieGraphs.figura.legend(loc=9, ncol=5)
+        # colectieGraphs.figura.set_size_inches(9.99, 6.7)
+        # colectieGraphs.figura.tight_layout()
+        # colectieGraphs.figura.subplots_adjust(top=0.900, bottom=0.3)
+        # colectieGraphs.figura.add_axes([0.1, 0.01, 0.3, 0.07])
+        # axaTextBox = colectieGraphs.figura.axes[-1]
+        # text_box = TextBox(axaTextBox, 'Evaluate', initial=FilterParams.__repr__())
 
         # ----------
 
         tmpPictureName = configDict['Title'] + '.png'
-        plt.savefig(tmpPicturePath + tmpPictureName)
+#        export_png(colectieGraphs.figura, tmpPicturePath + tmpPictureName)
 
         # Create a dictionary where the key is the slide number and the value is the picture name
         # But first check if the order configured is correct. If not, terminate the script.
@@ -237,26 +253,29 @@ for fileName in fileNames:
             exit()
         slidesOrder[configDict['slideNumber']] = tmpPictureName
 
+tabs = Tabs(tabs=panels)
+show(tabs)
+
 # We sort the slidesOrder so the outputed ppt would be in the requred
-sortedKeysAsInt = sorted([int(k) for k in slidesOrder.keys()])
-for slideNumber in sortedKeysAsInt:
+#sortedKeysAsInt = sorted([int(k) for k in slidesOrder.keys()])
+#for slideNumber in sortedKeysAsInt:
     # create a slide and add it to the ppt
-    title_slide_layout = prs.slide_layouts[5]
-    slide = prs.slides.add_slide(title_slide_layout)
-    titlu = slide.placeholders[0]
+#    title_slide_layout = prs.slide_layouts[5]
+#    slide = prs.slides.add_slide(title_slide_layout)
+#    titlu = slide.placeholders[0]
     # As the value stored for the key is the tmpPictureName, we use it for the title by removing the extension
-    titlu.text = os.path.splitext(slidesOrder[str(slideNumber)])[0]
-    titlu.top = 0
-    titlu.left = 0
-    titlu.height = Inches(0.5)
-    titlu.width = Inches(10)
-    titlu.text_frame.paragraphs[0].font.size = Pt(14)
-    titlu.text_frame.paragraphs[0].font.bold = True
-    pic = slide.shapes.add_picture(tmpPicturePath + slidesOrder[str(slideNumber)], Inches(0.01), Inches(0.5))
+#    titlu.text = os.path.splitext(slidesOrder[str(slideNumber)])[0]
+#    titlu.top = 0
+#    titlu.left = 0
+#    titlu.height = Inches(0.5)
+#    titlu.width = Inches(10)
+#    titlu.text_frame.paragraphs[0].font.size = Pt(14)
+#    titlu.text_frame.paragraphs[0].font.bold = True
+#    pic = slide.shapes.add_picture(tmpPicturePath + slidesOrder[str(slideNumber)], Inches(0.01), Inches(0.5))
 
 
 
-prs.save(outputPath + pptName)
+#prs.save(outputPath + pptName)
 
 
 
