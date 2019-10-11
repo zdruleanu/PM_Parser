@@ -6,9 +6,13 @@ import matplotlib.dates as mdates
 from bokeh.plotting import figure, show
 from bokeh.io import output_file
 from bokeh.models.widgets import Tabs, Panel
+from bokeh.models import ColumnDataSource
 from bokeh.io import export_png
 import bokeh.palettes as palletes
-from bokeh.models import Legend, LegendItem
+from bokeh.models import Legend, LegendItem, Button
+from bokeh.io import curdoc
+from bokeh.layouts import column
+from bokeh.server.server import Server
 import itertools
 import yaml
 from pptx import Presentation
@@ -137,6 +141,13 @@ def fileToPandas(fileName, fileExtension, skipRows=0):
     else:
         return pd.read_excel(fileName, skipRows=skipRows)
 
+def cb():
+
+    #legenda.location='center'
+#    source.data = ColumnDataSource(data=data).data
+    print("ffdsf")
+
+
 
 dataFolder = "./data"
 try:
@@ -221,7 +232,18 @@ for fileName in fileNames:
             legenda.items.extend([LegendItem(label=label, renderers=[graficCurent])])
             i += 1
         colectieGraphs.figura.add_layout(legenda, 'above')
-        panels.append(Panel(child=colectieGraphs.figura, title=TargetColumns.__str__()))
+        legenda.location = 'top_center'
+        #legenda.location = (0, -30)
+        legenda.orientation = 'horizontal'
+
+        #source = ColumnDataSource(data=dict(df))
+
+        button = Button()
+        button.on_click(cb())
+        #curdoc().add_root(column(button))
+
+        panels.append(Panel(child=column(colectieGraphs.figura, button), title=TargetColumns.__str__()))
+        #figura.add_layout([button])
 
         # adjustments to the figure
         # ---------
@@ -253,8 +275,21 @@ for fileName in fileNames:
             exit()
         slidesOrder[configDict['slideNumber']] = tmpPictureName
 
-tabs = Tabs(tabs=panels)
-show(tabs)
+def modify_doc(doc):
+    tabs = Tabs(tabs=panels)
+    doc.add_root(tabs)
+
+server = Server({'/': modify_doc}, num_procs=1)
+server.start()
+
+
+
+if __name__ == '__main__':
+    print('Opening Bokeh application on http://localhost:5006/')
+
+    server.io_loop.add_callback(server.show, "/")
+    server.io_loop.start()
+
 
 # We sort the slidesOrder so the outputed ppt would be in the requred
 #sortedKeysAsInt = sorted([int(k) for k in slidesOrder.keys()])
